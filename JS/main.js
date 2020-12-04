@@ -9,17 +9,17 @@ function RockPaperScissors(){
         let button1 = document.createElement("BUTTON");
         button1.id = "mode1";
         button1.innerHTML = "Best 2/3";
-        button1.onClick = RPMTwoThree();
+        button1.setAttribute("onclick", "RPMTwoThree();")
 
         let button2 = document.createElement("BUTTON");
         button2.id = "mode2";
         button2.innerHTML="Best 3/5";
-        button2.onClick = RPMThreeFive();
+        button2.setAttribute("onclick", "RPMThreeFive();")
 
         let button3 = document.createElement("BUTTON");
         button3.id = "mode3";
         button3.innerHTML = "Best 4/7";
-        button3.onClick = RPMFourSeven();
+        button3.setAttribute("onclick", "RPMFourSeven();")
 
         body.appendChild(paragraph);
         body.appendChild(button1);
@@ -36,18 +36,18 @@ function RPMTwoThree(){
 
     let button1 = document.createElement("BUTTON");
     button1.id = "mode1";
-    button1.innerHTML = "Best 2/3";
-    button1.onClick = Rock();
+    button1.innerHTML = "Rock";
+    button1.setAttribute("onclick", "Rock();");
 
     let button2 = document.createElement("BUTTON");
     button2.id = "mode2";
-    button2.innerHTML="Best 3/5";
-    button2.onClick = Paper();
+    button2.innerHTML="Paper";
+    button2.setAttribute("onclick", "Paper();");
 
     let button3 = document.createElement("BUTTON");
     button3.id = "mode3";
-    button3.innerHTML = "Best 4/7";
-    button3.onClick = Scissors();
+    button3.innerHTML = "Scissors";
+    button3.setAttribute("onclick", "Scissors();");
     
     body.appendChild(paragraph);
     body.appendChild(button1);
