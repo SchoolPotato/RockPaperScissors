@@ -1,4 +1,4 @@
-function RockPaperScissors(){
+function gameSetup(){
     let body = document.getElementById("main")
     
     if(document.getElementById("pickMode") == undefined){
@@ -37,17 +37,17 @@ function RPMTwoThree(){
     let button1 = document.createElement("BUTTON");
     button1.id = "mode1";
     button1.innerHTML = "Rock";
-    button1.setAttribute("onclick", "Rock();");
+    button1.setAttribute("onclick", "Rock(); rockPaperScissors();");
 
     let button2 = document.createElement("BUTTON");
     button2.id = "mode2";
     button2.innerHTML="Paper";
-    button2.setAttribute("onclick", "Paper();");
+    button2.setAttribute("onclick", "Paper(); rockPaperScissors();");
 
     let button3 = document.createElement("BUTTON");
     button3.id = "mode3";
     button3.innerHTML = "Scissors";
-    button3.setAttribute("onclick", "Scissors();");
+    button3.setAttribute("onclick", "Scissors(); rockPaperScissors();");
     
     body.appendChild(paragraph);
     body.appendChild(button1);
@@ -73,4 +73,20 @@ function Paper(){
 
 function Scissors(){
     console.log('scissors');
+}
+
+
+function rockPaperScissors(decision){
+    let x = Math.floor(Math.random() * Math.floor(3)) + 1;
+    switch(x){
+        case 1:
+            Rock();
+            break;
+        case 2:
+            Paper();
+            break;
+        case 3:
+            Scissors();
+            break;
+    }
 }
