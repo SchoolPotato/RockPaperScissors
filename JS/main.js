@@ -9,45 +9,49 @@ function gameSetup(){
         let button1 = document.createElement("BUTTON");
         button1.id = "mode1";
         button1.innerHTML = "Best 2/3";
-        button1.setAttribute("onclick", "RPMTwoThree();")
+        button1.setAttribute("onclick", "displayOptions(2);")
 
         let button2 = document.createElement("BUTTON");
         button2.id = "mode2";
         button2.innerHTML="Best 3/5";
-        button2.setAttribute("onclick", "RPMThreeFive();")
+        button2.setAttribute("onclick", "displayOptions(3);")
 
         let button3 = document.createElement("BUTTON");
         button3.id = "mode3";
         button3.innerHTML = "Best 4/7";
-        button3.setAttribute("onclick", "RPMFourSeven();")
+        button3.setAttribute("onclick", "displayOptions(4);")
 
         body.appendChild(paragraph);
         body.appendChild(button1);
         body.appendChild(button2);
         body.appendChild(button3);
     }
-  }
+}
 
-function RPMTwoThree(){
+function resetGame(){
+    location.reload();
+}
+
+function displayOptions(turns){
     let paragraph = document.createElement("P");
     let body = document.getElementById("main");
     paragraph.innerHTML = "Okay, pick Rock, Paper, or Scissors."
 
-
+    //Buttons for choices
     let button1 = document.createElement("BUTTON");
     button1.id = "rock";
     button1.innerHTML = "Rock";
-    button1.setAttribute("onclick", "Rock(); rockPaperScissors('Rock', 2);");
+    button1.setAttribute("onclick", "Rock(); rockPaperScissors('Rock', " + turns + ");");
 
     let button2 = document.createElement("BUTTON");
     button2.id = "paper";
     button2.innerHTML="Paper";
-    button2.setAttribute("onclick", "Paper(); rockPaperScissors('Paper', 2);");
+    button2.setAttribute("onclick", "Paper(); rockPaperScissors('Paper', " + turns + ");");
 
     let button3 = document.createElement("BUTTON");
     button3.id = "scissors";
     button3.innerHTML = "Scissors";
-    button3.setAttribute("onclick", "Scissors(); rockPaperScissors('Scissors', 2);");
+    button3.setAttribute("onclick", "Scissors(); rockPaperScissors('Scissors', " + turns + ");");
     
     body.appendChild(paragraph);
     body.appendChild(button1);
@@ -79,48 +83,80 @@ let playerScore = 0;
 let cpuScore = 0;
 
 function rockPaperScissors(decision, turns){
+    //Setup
+    //Randomizes Cpu's decision- I'm adding one to the result in order to make sure it works 100% of the time, zeroes are cursed
+    //Also removes functionality from buttons to prevent being able to continue the game after it's over
     let cpuDecision = Math.floor(Math.random() * Math.floor(3)) + 1;
     let body = document.getElementById("main");
     let para = document.createElement("P");
+    let button1 = document.getElementById("rock");
+    let button2 = document.getElementById("paper");
+    let button3 = document.getElementById("scissors");
     para.id = "WinLoss";
+    button1.setAttribute("onclick", "");
+    button2.setAttribute("onclick", "");
+    button3.setAttribute("onclick", "");
+    button1.id = "done";
+    button2.id = "done";
+    button3.id = "done";
 
+    //Deciding victor
+    //If the player's decision beats the CPU's decision, add one point to the player.
     if(decision == 'Rock' && cpuDecision == 3 || decision == 'Paper' && cpuDecision == 1 || decision == 'Scissors' && cpuDecision == 2){
         playerScore++
-        para.innerHTML = "The player wins. The scores are now: Player's Score: " + playerScore + ", Computer's Score: " + cpuScore;
+        para.innerHTML = "The player wins. The scores are now: <br>Player's Score: " + playerScore + ", Computer's Score: " + cpuScore;
         console.log(cpuScore);
         console.log(playerScore);
-    } else if (decision == 'Rock' && cpuDecision == 1 || decision == 'Paper' && cpuDecision == 2 || decision == 'Scissors' && cpuDecision == 3){
+    } 
+    
+    //If the player's decision is the same as the CPU's decision, do not add points.
+    else if (decision == 'Rock' && cpuDecision == 1 || decision == 'Paper' && cpuDecision == 2 || decision == 'Scissors' && cpuDecision == 3){
         para.innerHTML = "It's a tie. Try again."
-    } else {
+    } 
+    
+    //If the player's decision loses to the CPU's decision, add points to CPU score.
+    else {
         cpuScore++
-        para.innerHTML = "The computer wins. The scores are now: Player's Score: " + playerScore + ", Computer's Score: " + cpuScore;
+        para.innerHTML = "The computer wins. The scores are now: <br>Player's Score: " + playerScore + ", Computer's Score: " + cpuScore;
         console.log(cpuScore);
         console.log(playerScore);
     }
     body.appendChild(para);
 
-    if(playerScore <= turns && cpuScore <= turns){
-        switch(turns){
-            case 3:
-                RPMTwoThree();
-                break;
-            case 5:
-                RPMThreeFive();
-                break;
-            case 7:
-                RPMFourSeven();
-                break;
-        }
+    //If either CPU or Player meets win condition, stop the game and display the winner.
 
-    }else if(playerScore > cpuScore && playerScore >= turns){
+    if(playerScore != turns && cpuScore != turns){
+        if(turns == 2){
+            displayOptions(2);
+        } else if(turns == 3){
+            displayOptions(3);
+        } else if(turns == 4){
+            displayOptions(4);
+        }
+    }
+
+    else if(playerScore > cpuScore && playerScore >= turns){
         let para2 = document.createElement("P");
-        para2.innerHTML = "The player wins the whole match. Victory is yours!";
+        para2.innerHTML = "The player wins the whole match. Victory is yours! Would you like to try again?";
         body.appendChild(para2);
         playerScore = 0;
         cpuScore = 0;
+
+        let resetButton = document.createElement("BUTTON");
+        resetButton.id = "reset";
+        resetButton.innerHTML = "Restart";
+        resetButton.setAttribute("onclick", "resetGame();");
+        body.appendChild(resetButton);
+
     }else if (playerScore < cpuScore && cpuScore >= turns){
         let para2 = document.createElement("P");
         para2.innerHTML = "The computer wins the whole match. You've been defeated! Would you like to try again?";
         body.appendChild(para2);
+
+        let resetButton = document.createElement("BUTTON");
+        resetButton.id = "reset";
+        resetButton.innerHTML = "Restart";
+        resetButton.setAttribute("onclick", "resetGame();");
+        body.appendChild(resetButton);
     }
 }
