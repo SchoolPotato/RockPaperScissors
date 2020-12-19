@@ -40,6 +40,10 @@ function displayOptions(turns){
     scoreDisplay.id = "scoreDisplay";
     scoreDisplay.innerHTML = "Your score will be displayed here.";
 
+    document.getElementById('mode1').setAttribute("onclick", "noOptions();");
+    document.getElementById('mode2').setAttribute("onclick", "noOptions();");
+    document.getElementById('mode3').setAttribute("onclick", "noOptions();");
+
     //Buttons for choices
     let button1 = document.createElement("BUTTON");
     button1.id = "rock";
@@ -169,4 +173,8 @@ function rockPaperScissors(decision, turns){
         button2.id = "done";
         button3.id = "done";
     }
+}
+
+function noOptions(){
+    console.log("You cannot select modes now.");
 }
